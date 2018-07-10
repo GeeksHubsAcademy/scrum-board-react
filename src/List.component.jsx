@@ -20,7 +20,7 @@ class List extends React.Component {
                     <input type="text" />
                     <button>add task</button>
                 </div>
-                <Task data={this.props.data.tasks[0]}/>
+                {this.props.data.tasks.map(taskData => <Task data={taskData} key={taskData.taskId}/>)}
             </div>
         )
     }

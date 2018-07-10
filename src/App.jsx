@@ -123,7 +123,7 @@ class App extends Component {
         </header>
         <section>
           <div className="lists">
-            <List data={this.state.lists[2]}/>
+            { this.state.lists.map(listData => <List key={listData.listId} data={listData}/>)}
           </div>
         </section>
       </div>
