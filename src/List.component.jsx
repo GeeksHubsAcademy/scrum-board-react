@@ -6,18 +6,17 @@ class List extends React.Component {
     render() {
         return (
             <div className="list"
-                id="list-1243234">
+                id={this.props.data.listId}>
                 <div className="listHeader">
-                    <h4>To do
+                    <h4>{this.props.data.name}
                         <button>X</button>
                     </h4>
-
                 </div>
                 <div className="addTask">
                     <input type="text" />
                     <button>add task</button>
                 </div>
-                <Task/>
+                <Task data={this.props.data.tasks[0]}/>
             </div>
         )
     }

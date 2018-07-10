@@ -3,10 +3,10 @@ import './Task.component.css';
 class Task extends React.Component {
     render () {
         return (
-            <div className="taskItem" id="task-123234">
+            <div className="taskItem" id={this.props.data.taskId}>
                 <button>X</button>
                 <div className="taskText">
-                    Aprender React
+                    {this.props.data.text}
                   </div>
             </div>
         );
