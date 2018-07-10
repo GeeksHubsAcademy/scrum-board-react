@@ -20,7 +20,8 @@ class Task extends React.Component {
                             this.props.data.taskId, 
                             this.props.data.listId,
                             e.target.checked
-                        )}/>
+                        )}
+                    checked={this.props.data.completed}/>
                 <div className="taskText">
                     {this.props.data.text}
                   </div>
