@@ -2,10 +2,14 @@ import React from 'react';
 import './List.component.css';
 import Task from './Task.component.jsx';
 import ListType from './List.type.js';
+import PropTypes from 'prop-types';
 
 class List extends React.Component {
     static propTypes = {
-        data: ListType
+        data: ListType,
+        onHandleMarkAsCompleted: PropTypes.func.isRequired,
+        onHandleNewTask: PropTypes.func.isRequired,
+        onHandleRemoveList: PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -36,7 +40,11 @@ class List extends React.Component {
                     </h4>
                 </div>
                 <div className="addTask">
-                    <input type="text" value={this.state.newTaskName} onChange={this.handleInputChange} onKeyUp={this.handleAddNewTask} />
+                    <input 
+                        type="text" 
+                        value={this.state.newTaskName} 
+                        onChange={this.handleInputChange} 
+                        onKeyUp={this.handleAddNewTask} />
                     <button onClick={this.handleAddNewTask}>add task</button>
                 </div>
                 {this.props.data.tasks.map(taskData => 

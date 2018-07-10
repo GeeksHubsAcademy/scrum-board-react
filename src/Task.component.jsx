@@ -1,10 +1,13 @@
 import React from 'react';
 import TaskType from './Task.type.js';
+
+import PropTypes from 'prop-types';
 import './Task.component.css';
 
 class Task extends React.Component {
     static propTypes = {
-        data: TaskType
+        data: TaskType,
+        onHandleMarkAsCompleted: PropTypes.func.isRequired
     }
     render () {
         return (
