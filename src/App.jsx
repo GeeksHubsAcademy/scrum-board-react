@@ -52,7 +52,29 @@ class App extends Component {
       this.addNewList();
     }
   }
-  
+  removeList(listId) {
+      this.setState(prevState => {
+        let newLists = prevState.lists.filter( list => list.listId !== listId) ;
+        return { lists: newLists }
+      })
+  }
+  markAsCompleted(taskId,listId, completedState) {
+    this.setState(prevState => {
+        let newLists = prevState.lists.map(list => {
+          if(list.listId === listId) {
+            list.tasks = list.tasks.map(task => {
+              if(task.taskId === taskId) {
+                task.completed = completedState;
+              }
+              return task;
+            })
+          }
+          return list
+        }) ;
+        
+        return { lists: newLists }
+      })
+  }
  
   render() {
     localStorage.setItem('lists', JSON.stringify(this.state.lists));
@@ -64,7 +86,8 @@ class App extends Component {
         </header>
         <section>
           <div className="lists">
-            { this.state.lists.map(listData => <List key={listData.listId} data={listData} onHandleNewTask={this.addNewTask.bind(this)}/>)}
+            { this.state.lists.map( listData => 
+            <List key={listData.listId} data={listData} onHandleNewTask={this.addNewTask.bind(this)} onHandleRemoveList={this.removeList.bind(this)} onHandleMarkAsCompleted={this.markAsCompleted.bind(this)}/>)}
           </div>
         </section>
       </div>

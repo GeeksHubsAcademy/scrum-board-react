@@ -23,20 +23,27 @@ class List extends React.Component {
              this.setState({newTaskName: ''})
         }
     }
+    handleRemoveList = () => {
+        this.props.onHandleRemoveList(this.props.data.listId)
+    }
     render() {
         return (
             <div className="list"
                 id={this.props.data.listId}>
                 <div className="listHeader">
                     <h4>{this.props.data.name}
-                        <button>X</button>
+                        <button onClick={this.handleRemoveList}>X</button>
                     </h4>
                 </div>
                 <div className="addTask">
                     <input type="text" value={this.state.newTaskName} onChange={this.handleInputChange} onKeyUp={this.handleAddNewTask} />
                     <button onClick={this.handleAddNewTask}>add task</button>
                 </div>
-                {this.props.data.tasks.map(taskData => <Task data={taskData} key={taskData.taskId}/>)}
+                {this.props.data.tasks.map(taskData => 
+                <Task 
+                    data={taskData} 
+                    onHandleMarkAsCompleted={this.props.onHandleMarkAsCompleted} 
+                    key={taskData.taskId}/>)}
             </div>
         )
     }
