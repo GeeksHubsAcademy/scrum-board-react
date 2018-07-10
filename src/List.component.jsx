@@ -7,6 +7,22 @@ class List extends React.Component {
     static propTypes = {
         data: ListType
     }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            newTaskName: ''
+        }
+    }
+    handleInputChange = (e) => {
+        this.setState({newTaskName: e.target.value})
+    }
+    handleAddNewTask = (e) => {
+        if(e.keyCode === 13 || e.type === 'click') {
+            this.props.onHandleNewTask(this.state.newTaskName, this.props.data.listId)
+             this.setState({newTaskName: ''})
+        }
+    }
     render() {
         return (
             <div className="list"
@@ -17,8 +33,8 @@ class List extends React.Component {
                     </h4>
                 </div>
                 <div className="addTask">
-                    <input type="text" />
-                    <button>add task</button>
+                    <input type="text" value={this.state.newTaskName} onChange={this.handleInputChange} onKeyUp={this.handleAddNewTask} />
+                    <button onClick={this.handleAddNewTask}>add task</button>
                 </div>
                 {this.props.data.tasks.map(taskData => <Task data={taskData} key={taskData.taskId}/>)}
             </div>

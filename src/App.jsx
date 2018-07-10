@@ -6,111 +6,7 @@ class App extends Component {
       super( props );
       this.state = {
           'addNewListText': '',
-          "lists": [ 
-            {
-                  "listId": "list-1527162757956-93",
-                  "name": "HOLA",
-                  "tasks": [ 
-                    {
-                          "taskId": "task-1527162789999-97",
-                          "text": "asdasd",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1527162757956-93"
-                      },
-
-                      {
-                          "taskId": "task-1527162804002-28",
-                          "text": "eyyy",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1527162757956-93"
-                      }
-                  ]
-              },
-              {
-                  "listId": "list-1530092940943-56",
-                  "name": "to do",
-                  "tasks": [ {
-                          "taskId": "task-1530092942999-71",
-                          "text": "asdas",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1530092940943-56"
-                      },
-                      {
-                          "taskId": "task-1530092944317-15",
-                          "text": "asdasd",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1530092940943-56"
-                      },
-                      {
-                          "taskId": "task-1530092947093-16",
-                          "text": "asdasd",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1530092940943-56"
-                      },
-
-                      {
-                          "taskId": "task-1530092948542-54",
-                          "text": "asda",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1530092940943-56"
-                      },
-                      {
-                          "taskId": "task-1530092949749-77",
-                          "text": "asdas",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1530092940943-56"
-                      }
-                  ]
-
-              },
-              {
-                  "listId": "list-1530093112347-72",
-                  "name": "doing",
-                  "tasks": [ 
-                    {
-                          "taskId": "task-1530093119467-66",
-                          "text": "hola",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1530093112347-72"
-                      },
-
-                      {
-                          "taskId": "task-1530093120994-78",
-                          "text": "asdas",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1530093112347-72"
-                      },
-                      {
-                          "taskId": "task-1530093122178-30",
-                          "text": "asda",
-                          "completed": false,
-                          "color": "tomato",
-                          "listId": "list-1530093112347-72"
-                      }
-                  ]
-
-              },
-              {
-                  "listId": "list-1530093127163-67",
-                  "name": "aqsdasd",
-                  "tasks": [ {
-                      "taskId": "task-1530093128763-44",
-                      "text": "asda",
-                      "completed": false,
-                      "color": "tomato",
-                      "listId": "list-1530093127163-67"
-                  } ]
-              }
-          ]
+          "lists": JSON.parse(localStorage.getItem('lists')) || [],
 
       }
   }
@@ -130,6 +26,24 @@ class App extends Component {
     });
 
   }
+  addNewTask(taskName, listId) {
+    const newTask = {
+                      "taskId": this.generateId('task'),
+                      "text": taskName,
+                      "completed": false,
+                      "color": "white",
+                      "listId": listId
+                  }
+   this.setState(prevState => {
+     const newLists = prevState.lists.map( list => {
+       if (list.listId === listId) {
+         list.tasks.push(newTask)
+       }
+       return list;
+     })
+     return { lists: newLists}
+   })
+  }
   handleInputChange = (e) => {
     this.setState({addNewListText: e.target.value})
   }
@@ -138,8 +52,10 @@ class App extends Component {
       this.addNewList();
     }
   }
+  
  
   render() {
+    localStorage.setItem('lists', JSON.stringify(this.state.lists));
     return (
       <div className="App">
         <header className="addList">
@@ -148,7 +64,7 @@ class App extends Component {
         </header>
         <section>
           <div className="lists">
-            { this.state.lists.map(listData => <List key={listData.listId} data={listData}/>)}
+            { this.state.lists.map(listData => <List key={listData.listId} data={listData} onHandleNewTask={this.addNewTask.bind(this)}/>)}
           </div>
         </section>
       </div>
