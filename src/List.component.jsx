@@ -1,8 +1,12 @@
 import React from 'react';
 import './List.component.css';
 import Task from './Task.component.jsx';
+import ListType from './List.type.js';
 
 class List extends React.Component {
+    static propTypes = {
+        data: ListType
+    }
     render() {
         return (
             <div className="list"
