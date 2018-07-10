@@ -5,6 +5,7 @@ class App extends Component {
   constructor( props ) {
       super( props );
       this.state = {
+          'addNewListText': '',
           "lists": [ 
             {
                   "listId": "list-1527162757956-93",
@@ -112,14 +113,38 @@ class App extends Component {
           ]
 
       }
+  }
+  generateId(namespace) {
+    return `${namespace}-${Date.now()}-${Math.round(Math.random()*100)}`
 
   }
+  addNewList = () => {
+    const newList = {
+                  "listId": this.generateId('list'),
+                  "name": this.state.addNewListText,
+                  "tasks": []
+              }
+    this.setState(prevState => {
+      prevState.lists.push(newList);
+      return ({lists: prevState.lists, addNewListText: ''});
+    });
+
+  }
+  handleInputChange = (e) => {
+    this.setState({addNewListText: e.target.value})
+  }
+  handleKeyup = (e) => {
+    if(e.keyCode === 13) {
+      this.addNewList();
+    }
+  }
+ 
   render() {
     return (
       <div className="App">
         <header className="addList">
-          <input type="text" />
-          <button>add new list</button>
+          <input type="text" value={this.state.addNewListText} onChange={this.handleInputChange} onKeyUp={this.handleKeyup}/>
+          <button onClick={this.addNewList}>add new list</button>
         </header>
         <section>
           <div className="lists">
