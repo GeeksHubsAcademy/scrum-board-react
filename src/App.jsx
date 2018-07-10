@@ -11,21 +11,21 @@ class App extends Component {
     </header>
     <section>
         <div className="lists">
-            <div class="list"
-                 data-listId="list-1243234">
-                <div class="listHeader">
+            <div className="list"
+                 id="list-1243234">
+                <div className="listHeader">
                     <h4>To do
                         <button>X</button>
                     </h4>
 
                 </div>
-                <div class="addTask">
+                <div className="addTask">
                     <input type="text"/>
                     <button>add task</button>
                 </div>
-                <div class="taskItem" data-taskId="task-123234">
+                <div className="taskItem" id="task-123234">
                   <button>X</button>
-                  <div class="taskText">
+                  <div className="taskText">
                     Aprender React
                   </div>
                 </div>
