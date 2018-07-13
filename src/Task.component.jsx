@@ -7,7 +7,6 @@ import './Task.component.css';
 class Task extends React.Component {
     static propTypes = {
         data: TaskType,
-        onHandleMarkAsCompleted: PropTypes.func.isRequired
     }
     render () {
         return (
