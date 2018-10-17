@@ -2,12 +2,14 @@ import React from 'react';
 import './List.component.css';
 import Task from './Task.component.jsx';
 import ListType from './List.type.js';
+import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-import { addNewTask } from './store/actionCreators';
 class List extends React.Component {
     static propTypes = {
         data: ListType,
+        onHandleMarkAsCompleted: PropTypes.func.isRequired,
+        onHandleNewTask: PropTypes.func.isRequired,
+        onHandleRemoveList: PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -21,7 +23,7 @@ class List extends React.Component {
     }
     handleAddNewTask = (e) => {
         if(e.keyCode === 13 || e.type === 'click') {
-             this.props.onHandleNewTask(this.state.newTaskName, this.props.data.listId)
+            this.props.onHandleNewTask(this.state.newTaskName, this.props.data.listId)
              this.setState({newTaskName: ''})
         }
     }
@@ -54,7 +56,4 @@ class List extends React.Component {
         )
     }
 }
-
-const mapDispatchToProps = dispatch => ({ onHandleNewTask: (text, listId) => dispatch(addNewTask(text,listId)) });
-
-export default connect((state) => ({}), mapDispatchToProps )(List);
+export default List;
